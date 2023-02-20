@@ -7,8 +7,8 @@ const Order = [
      payment : 0,
      orderQuantity : 2,
      isPaid :false,
-     isDeliver : 1,
-     orderDate :'02-01-23'
+     isDeliver : false,
+     orderDate :'02-02-2023'
     },
    {
      user : ObjectId('637381ef9483630d4d9dbf15'),
@@ -16,8 +16,8 @@ const Order = [
      payment : 0,
      orderQuantity : 3,
      isPaid :false,
-     isDeliver : 1,
-     orderDate :'02-01-23'
+     isDeliver : false,
+     orderDate :'10-01-2023'
     },
 ];
 

@@ -91,6 +91,7 @@ const totalOrder = async(req,res,next)=>{
         next(error)
     }
 };
+
 const getAllOrder = async(req,res,next)=>{
     try {
         //to do:
@@ -119,7 +120,7 @@ const getAllOrder = async(req,res,next)=>{
         if(orders){
         for (let i = 0; i < orders.length; i++) {
             const element = {
-                id : orders[i]._id ,
+                _id : orders[i]._id ,
                 productName : orders[i].product.productName,
                 customerName : orders[i].user.name,
                 quantity : orders[i].orderQuantity,
@@ -138,12 +139,28 @@ const getAllOrder = async(req,res,next)=>{
 
 };
 
+const getSingleOrder = async(req,res,next)=>{
+    try {
+        const { id } = req.params;
+
+
+        const order =await Order.findById(id).populate('user product', '-password').orFail();
+
+        res.status(200).json({
+            status : true,
+            order
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const updateOrder = async(req,res,next) =>{
     try {
         const { id } = req.params;
         const { isPaid, isDeliver } = req.body;
 
-        const order = await Order.findById(id).orFail().populate('product');
+        const order = await Order.findById(id).populate('product').orFail();
 
         order.isPaid = isPaid === 'true' ? true:false;
         order.paidAt = Date.now();
@@ -180,4 +197,4 @@ const newOrder = async(req,res,next)=>{
     }
 }
 
-module.exports ={ getAllOrder,updateOrder,newOrder,totalOrder,totalSaleQty  }
+module.exports ={ getAllOrder,getSingleOrder ,updateOrder,newOrder,totalOrder,totalSaleQty  }

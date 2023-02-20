@@ -40,9 +40,8 @@ const OrderSchema = mongoose.Schema({
         default : 0
     },
     isDeliver : {
-        type : Number,
-        required : true,
-        default : 0
+        type : Boolean,
+        default : false
     }
 },{
     timestamps : true

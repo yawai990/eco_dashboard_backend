@@ -44,7 +44,6 @@ const updateSingleProdct = async(req,res,next) =>{
 
         const product = await Product.findById(id).orFail();
 
-        console.log(product)
         product.productName = productName || product.productName;
         product.price = productPrice || product.price;
         product.category = category || product.category;
