@@ -1,5 +1,5 @@
 const orderRouter = require('express').Router();
-const { getAllOrder,getSingleOrder,updateOrder, newOrder, totalSaleQty,totalOrder } = require('../controller/OrderController');
+const { getAllOrder,getSingleOrder,updateOrder, newOrder, totalSaleQty,totalOrder,makeDeliver } = require('../controller/OrderController');
 const { verifyLoggedIn, verifyIsAdmin } = require('../middleware/verifyLoggedIn');
 
 orderRouter.use(verifyLoggedIn)
@@ -10,6 +10,7 @@ orderRouter.use(verifyLoggedIn)
            .get('/getsingleorder/:id',getSingleOrder)
            .post('/neworder', newOrder)
            .put('/updateorder/:id', updateOrder)
+           .put('/makedeliver/:id', makeDeliver)
 
 
 module.exports = orderRouter;

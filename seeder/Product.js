@@ -28,9 +28,9 @@ const Product = [
       brand : 'adidas',
       stock : 8,
       sales : 7,
-      image : [{path : 'ecommerV2/ejednicm4ki2jaf923cl.png'}],
+      image : [{path : 'ecommerV2/cdq2gyebdcljqhvh2dys.png'}],
       rating : 4,
-      reviews : []
+      reviews : [],
   }
 ]
 
