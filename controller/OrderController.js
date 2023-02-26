@@ -3,6 +3,8 @@ const ObjectId = require('mongodb').ObjectId;
 
 const totalSaleQty = async(req,res,next)=>{
     try {        
+
+        const { year } = req.query;
         const jan = [],feb=[],mar=[],apr=[],may=[],jun=[],july=[],aug=[],sept=[],oct=[],nov=[],dec=[];
         let tsale = 0;
         let trevenue = 0;
@@ -11,10 +13,11 @@ const totalSaleQty = async(req,res,next)=>{
                                    .select('orderQuantity orderDate')
                                    .orFail();
 
+       const orderYear = t_order.filter(e => e.orderDate.split('-')[2] === year);
         /*
         1. collect the same month together, month = { january :[{price,quantity},{price,quantity}], february : [...]}
         */
-       t_order.forEach(x =>{
+        orderYear.forEach(x =>{
             switch (x.orderDate.split('-')[1]) {
                 case '01':
                     jan.push({price : x.product.price, quantity : x.orderQuantity})
@@ -216,6 +219,19 @@ const newOrder = async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
+};
+
+const Years = async (req,res,next)=>{
+    try {
+        const orders = await Order.find().select('orderDate').orFail();
+        const years = [...new Set(orders.map(e => e.orderDate.split('-')[2]))];
+        res.json({
+            success : true,
+            years
+        })
+    } catch (error) {
+        next(error)
+    }
 }
 
-module.exports ={ getAllOrder,getSingleOrder ,updateOrder,newOrder,totalOrder,totalSaleQty, makeDeliver };
+module.exports ={ getAllOrder,getSingleOrder ,updateOrder,newOrder,totalOrder,totalSaleQty, makeDeliver,Years };

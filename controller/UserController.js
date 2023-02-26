@@ -154,7 +154,7 @@ const loginUser = async(req,res, next) =>{
 
 const updateUser = async(req,res,next) =>{
     const { id } = req.params;
-    const { name, email, password } = req.body;
+    const { name, email, new_password,address } = req.body;
 
     try {
         //find the user with the id
@@ -162,11 +162,15 @@ const updateUser = async(req,res,next) =>{
 
         user.name = name || user.name;
         user.email = email || user.email;
-        user.password = hashedPassword(password) || user.password;
+        user.password = hashedPassword(new_password) || user.password;
+        user.address = address || '';
 
         user.save();
 
-        res.status(202).send('User updated');
+        res.status(202).json({
+            success : true,
+            message : 'your profile updated'
+        });
     } catch (error) {
         next(error)
     }
