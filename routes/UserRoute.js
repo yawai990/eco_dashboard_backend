@@ -1,4 +1,4 @@
-const { getUsers,registerUser, loginUser, updateUser, deleteUser, writeReview } = require('../controller/UserController');
+const { getUsers,registerUser, loginUser, updateUser, deleteUser, writeReview,getUser } = require('../controller/UserController');
 const { verifyLoggedIn, verifyIsAdmin } = require('../middleware/verifyLoggedIn');
 
 const userRouter = require('express').Router();
@@ -9,7 +9,8 @@ userRouter.post('/register',registerUser)
 userRouter.use(verifyLoggedIn)
           .post('/:product_id/review', writeReview)
             .put('/update/:id',updateUser)
-            .delete('/delete/:id',deleteUser)
+            .delete('/deleteuser/:id',deleteUser)
             .get('/getusers', verifyIsAdmin, getUsers)
+            .get('/getuser/:id', verifyIsAdmin, getUser)
 
 module.exports = userRouter;

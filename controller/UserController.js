@@ -17,6 +17,18 @@ const getUsers = async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
+};
+
+const getUser = async(req,res,next)=>{
+    try {
+        const { id } = req.params;
+        
+        const user = await User.find({ _id:id }).select('-isAdmin').orFail();
+
+        return res.status(200).json(user)
+    } catch (error) {
+        next(error)
+    }
 }
 
 const registerUser = async(req,res, next) =>{
@@ -150,7 +162,7 @@ const updateUser = async(req,res,next) =>{
 
         user.name = name || user.name;
         user.email = email || user.email;
-        user.password = password || user.password;
+        user.password = hashedPassword(password) || user.password;
 
         user.save();
 
@@ -232,4 +244,4 @@ const writeReview  = async ( req,res, next ) =>{
 }
 
 
-module.exports = { getUsers,registerUser, loginUser, updateUser, deleteUser, writeReview };
+module.exports = { getUsers,registerUser, loginUser, updateUser, deleteUser, writeReview,getUser };
