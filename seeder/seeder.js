@@ -9,6 +9,8 @@ const reviewData = require('./Review');
 const Review = require('../models/ReviewModel');
 const Order = require('../models/OrderModel');
 const orderData = require('./Order');
+const Category = require('../models/CategoryModel');
+const categoriesData = require('./Category');
 
 const importData = async() =>{
     try {
@@ -16,16 +18,19 @@ const importData = async() =>{
         await Product.collection.dropIndexes();
         await Review.collection.dropIndexes();
         await Order.collection.dropIndexes();
+        await Category.collection.dropIndexes();
 
         await User.collection.deleteMany()
         await Product.collection.deleteMany()
         await Review.collection.deleteMany()
         await Order.collection.deleteMany()
+        await Category.collection.deleteMany()
 
         await User.collection.insertMany(userData)
         await Product.collection.insertMany(productData)
         await Review.collection.insertMany(reviewData)
         await Order.collection.insertMany(orderData)
+        await Category.collection.insertMany(categoriesData)
 
         console.log('data inserted successfully')
         process.exit();
