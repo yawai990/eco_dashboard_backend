@@ -1,10 +1,12 @@
 const Category = require('../models/CategoryModel');
+const Products = require('../models/ProductModel')
 
 const getAllCategories = async(req,res,next)=>{
     try {
-        const categories =await Category.find().orFail();
+        const categories = await Category.find().orFail();
+        const products = await Products.find().orFail();
         
-        return   res.status(200).json({
+        return res.status(200).json({
             status : true,
             categories
         });
@@ -13,17 +15,33 @@ const getAllCategories = async(req,res,next)=>{
     }
 };
 
+const addNewCategory = async(req,res,next)=>{
+    try {
+       const data = req.body;
+    
+        Category.insertMany(data)
+
+        res.status(201).json({
+            status : true,
+            message:'new categories are added'
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const deleteCategory = async(req,res,next) =>{
+
     try {
         const { id } = req.params;
 
-       const category =await Category.findById(id).orFail();
+       const category = await Category.findById(id).orFail();
     
        if(category){
         category.remove()
         category.save()
         return res.status(201).json({
-            statsu : true,
+            status : true,
             message : 'One category deleted by admin'
         })
        }else{
@@ -33,15 +51,13 @@ const deleteCategory = async(req,res,next) =>{
         })
        }
 
-       console.log(category)
-
-       res.send('this is delete')
     } catch (error) {
         next(error)
     }
 }
 
 module.exports = {
+    addNewCategory,
     getAllCategories,
     deleteCategory
 }
