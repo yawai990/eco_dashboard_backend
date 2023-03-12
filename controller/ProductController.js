@@ -68,7 +68,6 @@ cloudinary.config({
 });
 
 const createProduct = async (req,res,next) =>{
-
         const { productName, productPrice, productBrand, productCategory, productStock, img } = req.body;
 
     try {

@@ -8,7 +8,8 @@ const getAllCategories = async(req,res,next)=>{
         
         return res.status(200).json({
             status : true,
-            categories
+            categories,
+            products
         });
     } catch (error) {
         next(error)
