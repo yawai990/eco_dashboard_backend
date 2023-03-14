@@ -25,19 +25,9 @@ const EmployeeSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    rank : {
-        type : String,
-        required : true
-    },
-    HRCode : {
-        type: String,
-        required : true,
-        unique : true
-    },
-    birthDate : {
-        type : String,
-        required : true
-    },
+    rank : {type : String,required : true},
+    HRCode : {type: String,required : true,unique : true},
+    birthDate : {type : String,required : true},
     nationality : { type : String },
     gender : { type : String },
     state : {type :String},
